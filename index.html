@@ -1,86 +1,137 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>钰钰商店</title>
-		<link rel="icon" href="/favicon.ico" type="image/png" />
-	</head>
-	<body>
-		<div class="container">
-			<h1>稍等片刻</h1>
-			<p>我们的服务器正在为您分配最新的官网地址！</p>
-			<div class="loader"></div>
-			<div class="contact">五秒内自动为您跳转到最新的网站！</div>
-		</div>
-	</body>
-	<script>
-		window.onload = function () {
-			setTimeout(function () {
-				window.location.href = "https://yuid.cc";
-			}, 5000);
-		};
-	</script>
-	<style>
-		body {
-			background-color: #f5f5f5;
-			font-family: Arial, sans-serif;
-			margin: 0;
-			padding: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 100vh;
-			text-align: center;
-		}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>钰钰商店</title>
+    <link rel="icon" href="/favicon.ico" type="image/png" />
+    <style>
+      body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+      }
 
-		.container {
-			background-color: #fff;
-			border-radius: 16px;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-			padding: 30px;
-			width: calc(90vw + 200px);
-			max-width: 800px;
-			margin: 20px;
-		}
+      .container {
+        background-color: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: calc(90vw + 200px);
+        max-width: 800px;
+        margin: 20px;
+        z-index: 1;
+      }
 
-		h1 {
-			color: #000;
-			margin-bottom: 10px;
-			font-size: calc(12px + 1vw);
-		}
+      h1 {
+        color: #000;
+        margin-bottom: 10px;
+        font-size: calc(12px + 1vw);
+      }
 
-		p {
-			color: #666;
-			margin-bottom: 30px;
-			font-size: calc(12px + 0.5vw);
-		}
+      p {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: calc(12px + 0.5vw);
+      }
 
-		.loader {
-			border: calc(1px + 0.5vw) solid #f3f3f3;
-			border-top: calc(1px + 0.5vw) solid #3498db;
-			border-radius: 50%;
-			width: calc(20px + 2vw);
-			height: calc(20px + 2vw);
-			animation: spin 2s linear infinite;
-			margin: 0 auto;
-		}
+      .loader {
+        border: calc(1px + 0.5vw) solid #f3f3f3;
+        border-top: calc(1px + 0.5vw) solid #3498db;
+        border-radius: 50%;
+        width: calc(20px + 2vw);
+        height: calc(20px + 2vw);
+        animation: spin 2s linear infinite;
+        margin: 0 auto;
+      }
 
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
-		}
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-		.contact {
-			font-size: calc(12px + 0.3vw);
-			margin-top: 20px;
-		}
-		a {
-			text-decoration: none;
-		}
-	</style>
+      .contact {
+        font-size: calc(12px + 0.3vw);
+        margin-top: 20px;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      /* 雪花样式 */
+      .snowflake {
+        position: fixed;
+        top: -10px;
+        color: #fff;
+        font-size: 1em;
+        z-index: 0;
+        user-select: none;
+        pointer-events: none;
+        animation: fall linear infinite, sway ease-in-out infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      @keyframes sway {
+        0% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(20px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>稍等片刻</h1>
+      <p>我们的服务器正在为您分配最新的官网地址！</p>
+      <div class="loader"></div>
+      <div class="contact">五秒内自动为您跳转到最新的网站！</div>
+    </div>
+
+    <!-- 雪花脚本 -->
+    <script>
+      window.onload = function () {
+        setTimeout(function () {
+          window.location.href = "https://yuid.cc";
+        }, 5000);
+
+        // 添加雪花效果
+        const body = document.body;
+        for (let i = 0; i < 100; i++) {
+          const snowflake = document.createElement("div");
+          snowflake.className = "snowflake";
+          snowflake.textContent = "❄";
+          snowflake.style.left = Math.random() * 100 + "vw";
+          snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+          snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+          snowflake.style.animationDelay = Math.random() * 5 + "s";
+          body.appendChild(snowflake);
+        }
+      };
+    </script>
+  </body>
 </html>
