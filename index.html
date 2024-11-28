@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="钰钰商店服务器正在为您分配最新官网地址，五秒后自动跳转。" />
+    <meta name="keywords" content="钰钰商店, 跳转页面, 最新官网" />
     <title>钰钰商店</title>
     <link rel="icon" href="/favicon.ico" type="image/png" />
     <style>
@@ -18,7 +20,6 @@
         text-align: center;
         overflow: hidden;
       }
-
       .container {
         background-color: #fff;
         border-radius: 16px;
@@ -29,19 +30,16 @@
         margin: 20px;
         z-index: 1;
       }
-
       h1 {
         color: #000;
         margin-bottom: 10px;
         font-size: calc(12px + 1vw);
       }
-
       p {
         color: #666;
         margin-bottom: 20px;
         font-size: calc(12px + 0.5vw);
       }
-
       .loader {
         border: calc(1px + 0.5vw) solid #f3f3f3;
         border-top: calc(1px + 0.5vw) solid #3498db;
@@ -51,7 +49,6 @@
         animation: spin 2s linear infinite;
         margin: 0 auto;
       }
-
       @keyframes spin {
         0% {
           transform: rotate(0deg);
@@ -60,12 +57,10 @@
           transform: rotate(360deg);
         }
       }
-
       .contact {
         font-size: calc(12px + 0.3vw);
         margin-top: 20px;
       }
-
       .button {
         display: inline-block;
         margin-top: 20px;
@@ -78,12 +73,9 @@
         cursor: pointer;
         text-decoration: none;
       }
-
       .button:hover {
         background-color: #287bc5;
       }
-
-      /* 雪花样式 */
       .snowflake {
         position: fixed;
         top: -10px;
@@ -94,7 +86,6 @@
         pointer-events: none;
         animation: fall linear infinite, sway ease-in-out infinite;
       }
-
       @keyframes fall {
         0% {
           transform: translateY(0);
@@ -103,7 +94,6 @@
           transform: translateY(100vh);
         }
       }
-
       @keyframes sway {
         0% {
           transform: translateX(0);
@@ -122,18 +112,29 @@
       <h1>稍等片刻</h1>
       <p>我们的服务器正在为您分配最新的官网地址！</p>
       <div class="loader"></div>
-      <div class="contact">五秒内自动为您跳转到最新的网站！</div>
+      <div class="contact">5 秒内自动为您跳转到最新的网站！</div>
       <button class="button" onclick="manualRedirect()">立即跳转</button>
     </div>
 
-    <!-- 雪花脚本 -->
-    <script>
-      // 是否已经跳转的标志
-      let hasRedirected = false;
+    <noscript>
+      <p>请手动访问 <a href="https://yuid.cc">https://yuid.cc</a></p>
+    </noscript>
 
+    <script>
+      let hasRedirected = false;
+      let countdown = 5;
+      const contactDiv = document.querySelector(".contact");
+
+      // 倒计时更新
+      const timer = setInterval(() => {
+        countdown--;
+        contactDiv.textContent = 还有 ${countdown} 秒自动为您跳转到最新的网站！;
+        if (countdown === 0) clearInterval(timer);
+      }, 1000);
+
+      // 自动跳转
       window.onload = function () {
-        // 设置自动跳转
-        setTimeout(function () {
+        setTimeout(() => {
           if (!hasRedirected) {
             hasRedirected = true;
             window.location.href = "https://yuid.cc";
@@ -141,20 +142,22 @@
         }, 5000);
 
         // 添加雪花效果
+        const snowflakeCount = window.innerWidth > 768 ? 100 : 50;
         const body = document.body;
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < snowflakeCount; i++) {
           const snowflake = document.createElement("div");
           snowflake.className = "snowflake";
-          snowflake.textContent = "❄";
+          snowflake.textContent = "❄️";
           snowflake.style.left = Math.random() * 100 + "vw";
           snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-          snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+          snowflake.style.
+          animationDuration = Math.random() * 5 + 5 + "s";
           snowflake.style.animationDelay = Math.random() * 5 + "s";
           body.appendChild(snowflake);
         }
       };
 
-      // 手动跳转函数
+      // 手动跳转
       function manualRedirect() {
         if (!hasRedirected) {
           hasRedirected = true;
