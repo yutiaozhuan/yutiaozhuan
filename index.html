@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="钰钰商店服务器正在为您分配最新官网地址，五秒后自动跳转。" />
-    <meta name="keywords" content="钰钰商店, 跳转页面, 最新官网" />
     <title>钰钰商店</title>
     <link rel="icon" href="/favicon.ico" type="image/png" />
     <style>
@@ -20,35 +18,45 @@
         text-align: center;
         overflow: hidden;
       }
+
       .container {
         background-color: #fff;
         border-radius: 16px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         padding: 30px;
-        width: calc(90vw + 200px);
-        max-width: 800px;
-        margin: 20px;
+        max-width: 600px;
+        width: 90%;
         z-index: 1;
       }
+
       h1 {
         color: #000;
         margin-bottom: 10px;
-        font-size: calc(12px + 1vw);
+        font-size: 1.8rem;
       }
+
       p {
         color: #666;
         margin-bottom: 20px;
-        font-size: calc(12px + 0.5vw);
+        font-size: 1rem;
       }
+
+      .loader-container {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin: 20px auto;
+      }
+
       .loader {
-        border: calc(1px + 0.5vw) solid #f3f3f3;
-        border-top: calc(1px + 0.5vw) solid #3498db;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
         border-radius: 50%;
-        width: calc(20px + 2vw);
-        height: calc(20px + 2vw);
+        width: 100%;
+        height: 100%;
         animation: spin 2s linear infinite;
-        margin: 0 auto;
       }
+
       @keyframes spin {
         0% {
           transform: rotate(0deg);
@@ -57,15 +65,23 @@
           transform: rotate(360deg);
         }
       }
-      .contact {
-        font-size: calc(12px + 0.3vw);
-        margin-top: 20px;
+
+      .countdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #3498db;
+        pointer-events: none;
       }
+
       .button {
         display: inline-block;
         margin-top: 20px;
         padding: 10px 20px;
-        font-size: calc(12px + 0.5vw);
+        font-size: 1rem;
         color: #fff;
         background-color: #3498db;
         border: none;
@@ -73,27 +89,31 @@
         cursor: pointer;
         text-decoration: none;
       }
+
       .button:hover {
         background-color: #287bc5;
       }
+
+      /* 雪花样式 */
       .snowflake {
         position: fixed;
         top: -10px;
         color: #fff;
-        font-size: 1em;
         z-index: 0;
         user-select: none;
         pointer-events: none;
         animation: fall linear infinite, sway ease-in-out infinite;
       }
+
       @keyframes fall {
         0% {
-          transform: translateY(0);
+          transform: translateY(-100%);
         }
         100% {
           transform: translateY(100vh);
         }
       }
+
       @keyframes sway {
         0% {
           transform: translateX(0);
@@ -111,51 +131,36 @@
     <div class="container">
       <h1>稍等片刻</h1>
       <p>我们的服务器正在为您分配最新的官网地址！</p>
-      <div class="loader"></div>
-      <div class="contact">5 秒内自动为您跳转到最新的网站！</div>
+
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div id="countdown" class="countdown">5</div>
+      </div>
+
       <button class="button" onclick="manualRedirect()">立即跳转</button>
     </div>
 
-    <noscript>
-      <p>请手动访问 <a href="https://yuid.cc">https://yuid.cc</a></p>
-    </noscript>
-
+    <!-- 雪花脚本 -->
     <script>
       let hasRedirected = false;
-      let countdown = 5;
-      const contactDiv = document.querySelector(".contact");
+      let countdownValue = 5;
 
-      // 倒计时更新
-      const timer = setInterval(() => {
-        countdown--;
-        contactDiv.textContent = 还有 ${countdown} 秒自动为您跳转到最新的网站！;
-        if (countdown === 0) clearInterval(timer);
-      }, 1000);
+      // 启动倒计时
+      function startCountdown() {
+        const countdownElement = document.getElementById("countdown");
+        const interval = setInterval(() => {
+          countdownValue--;
+          countdownElement.textContent = countdownValue;
 
-      // 自动跳转
-      window.onload = function () {
-        setTimeout(() => {
-          if (!hasRedirected) {
-            hasRedirected = true;
-            window.location.href = "https://yuid.cc";
+          if (countdownValue <= 0) {
+            clearInterval(interval);
+            if (!hasRedirected) {
+              hasRedirected = true;
+              window.location.href = "https://yuid.cc";
+            }
           }
-        }, 5000);
-
-        // 添加雪花效果
-        const snowflakeCount = window.innerWidth > 768 ? 100 : 50;
-        const body = document.body;
-        for (let i = 0; i < snowflakeCount; i++) {
-          const snowflake = document.createElement("div");
-          snowflake.className = "snowflake";
-          snowflake.textContent = "❄️";
-          snowflake.style.left = Math.random() * 100 + "vw";
-          snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-          snowflake.style.
-          animationDuration = Math.random() * 5 + 5 + "s";
-          snowflake.style.animationDelay = Math.random() * 5 + "s";
-          body.appendChild(snowflake);
-        }
-      };
+        }, 1000);
+      }
 
       // 手动跳转
       function manualRedirect() {
@@ -164,6 +169,36 @@
           window.location.href = "https://yuid.cc";
         }
       }
+
+      // 雪花动画
+      function createSnowflakes() {
+        const body = document.body;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const snowflakeCount = Math.max(50, Math.min(100, Math.floor(width / 10))); // 动态调整雪花数量
+      for (let i = 0; i < snowflakeCount; i++) {
+          const snowflake = document.createElement("div");
+          snowflake.className = "snowflake";
+          snowflake.textContent = "❄️";
+          snowflake.style.left = Math.random() * 100 + "vw";
+          snowflake.style.fontSize = Math.random() * (width / 100) + 10 + "px"; // 随屏幕大小调整雪花尺寸
+          snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+          snowflake.style.animationDelay = Math.random() * 5 + "s";
+          body.appendChild(snowflake);
+        }
+      }
+
+      window.onload = function () {
+        startCountdown();
+        createSnowflakes();
+      };
+
+      // 监听窗口调整大小，重新调整雪花适配
+      window.onresize = function () {
+        document.querySelectorAll(".snowflake").forEach((snowflake) => snowflake.remove());
+        createSnowflakes();
+      };
     </script>
   </body>
 </html>
