@@ -51,25 +51,23 @@
       }
 
       .circle {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100px;
         height: 100px;
-        border: 8px solid #f3f3f3;
         border-radius: 50%;
-        clip-path: circle(50%);
-        background: conic-gradient(#3498db calc(var(--progress, 0) * 1%), #f3f3f3 0%);
+        background: conic-gradient(
+          #3498db calc(var(--progress, 0) * 360deg),
+          #f3f3f3 0deg
+        );
+        animation: progress 5s linear forwards;
       }
 
-      .inner-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 16px;
-        font-weight: bold;
-        color: #3498db;
+      @keyframes progress {
+        0% {
+          --progress: 0;
+        }
+        100% {
+          --progress: 1;
+        }
       }
 
       .button {
@@ -115,33 +113,22 @@
       <h1>稍等片刻</h1>
       <p>我们的服务器正在为您分配最新的官网地址！</p>
       <div class="loader">
-        <div class="circle" id="circle"></div>
-        <div class="inner-text" id="innerText">5s</div>
+        <div class="circle"></div>
       </div>
       <button class="button" onclick="manualRedirect()">立即跳转</button>
     </div>
 
     <script>
       let hasRedirected = false;
-      let progress = 0;
 
       window.onload = function () {
         // 设置自动跳转
-        const circle = document.getElementById("circle");
-        const innerText = document.getElementById("innerText");
-        const interval = setInterval(() => {
-          progress += 1 / 50; // 5秒 = 50帧
-          circle.style.setProperty("--progress", progress);
-          innerText.textContent = `${Math.ceil(5 - progress * 5)}s`;
-
-          if (progress >= 1) {
-            clearInterval(interval);
-            if (!hasRedirected) {
-              hasRedirected = true;
-              window.location.href = "https://yuid.cc";
-            }
+        setTimeout(function () {
+          if (!hasRedirected) {
+            hasRedirected = true;
+            window.location.href = "https://yuid.cc";
           }
-        }, 100);
+        }, 5000);
 
         // 监听页面点击事件，生成烟花效果
         document.body.addEventListener("click", function (event) {
