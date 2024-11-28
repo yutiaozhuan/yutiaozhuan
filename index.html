@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="钰钰商店 - 稍等片刻，正在为您分配最新的官网地址。" />
     <title>钰钰商店</title>
     <link rel="icon" href="/favicon.ico" type="image/png" />
     <style>
@@ -97,6 +96,7 @@
         top: -10px;
         color: #fff;
         font-size: 1em;
+        opacity: 0.8;
         z-index: 0;
         user-select: none;
         pointer-events: none;
@@ -114,38 +114,56 @@
           transform: translateX(20px);
         }
       }
+
+      /* 点击特效 */
+      .click-effect {
+        position: absolute;
+        color: #3498db;
+        font-size: 1rem;
+        font-weight: bold;
+        animation: fadeOut 1s ease forwards;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(2);
+        }
+      }
     </style>
   </head>
   <body>
-    <noscript>
-      <div class="container">
-        <h1>请启用JavaScript</h1>
-        <p>您的浏览器似乎禁用了JavaScript，无法完成跳转。</p>
-      </div>
-    </noscript>
-
     <div class="container">
       <h1>稍等片刻</h1>
       <p>我们的服务器正在为您分配最新的官网地址！</p>
       <div class="loader"></div>
       <div class="contact">五秒内自动为您跳转到最新的网站！</div>
-      <button class="button" id="redirectButton" aria-label="立即跳转到最新官网">立即跳转</button>
+      <button class="button" id="redirectButton">立即跳转</button>
     </div>
 
     <script>
       const REDIRECT_URL = "https://yuid.cc";
-      const SNOWFLAKE_COUNT = 100; // 可调整雪花数量
+      const SNOWFLAKE_COUNT = 50; // 雪花数量
       let hasRedirected = false;
 
       // 雪花生成函数
-      function createSnowflakes(count) {
+      function createSnowflakes() {
         const body = document.body;
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < SNOWFLAKE_COUNT; i++) {
           const snowflake = document.createElement("div");
           snowflake.className = "snowflake";
           snowflake.textContent = "❄️";
+
+          // 随机化样式
           snowflake.style.left = Math.random() * 100 + "vw";
           snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+          snowflake.style.opacity = Math.random() * 0.5 + 0.5;
           snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
           snowflake.style.animationDelay = Math.random() * 5 + "s";
           body.appendChild(snowflake);
@@ -160,15 +178,36 @@
         }
       }
 
+      // 点击特效
+      function addClickEffect(event) {
+        const effect = document.createElement("div");
+        effect.className = "click-effect";
+        effect.textContent = "@yuyuyu";
+
+        // 设置位置
+        effect.style.left = event.pageX + "px";
+        effect.style.top = event.pageY + "px";
+
+        document.body.appendChild(effect);
+
+        // 动画结束后移除元素
+        effect.addEventListener("animationend", () => {
+          effect.remove();
+        });
+      }
+
       // 初始化
       window.onload = function () {
-        createSnowflakes(SNOWFLAKE_COUNT);
+        createSnowflakes();
 
         // 自动跳转
         setTimeout(redirect, 5000);
 
         // 按钮事件监听
         document.getElementById("redirectButton").addEventListener("click", redirect);
+
+        // 页面点击特效
+        document.addEventListener("click", addClickEffect);
       };
     </script>
   </body>
